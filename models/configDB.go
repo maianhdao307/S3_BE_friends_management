@@ -19,7 +19,8 @@ func Connect() error {
 	db, err := gorm.Open(postgres.Open(psqlInfo), &gorm.Config{})
 
 	db.DB()
-	db.AutoMigrate(&Friend{}, &Subscription{})
+	db.AutoMigrate(&Friend{}, &Subscription{}, &Blocking{})
+	db.Migrator().CreateIndex(&Friend{}, "compositeindex")
 
 	DB = db
 
